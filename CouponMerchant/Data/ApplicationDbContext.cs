@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using CouponMerchant.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,5 +10,7 @@ namespace CouponMerchant.Data
             : base(options)
         {
         }
+
+        public DbSet<ServiceType> ServiceType { get; set; }
     }
 }
