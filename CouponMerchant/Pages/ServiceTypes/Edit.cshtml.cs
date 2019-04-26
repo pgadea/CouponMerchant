@@ -4,9 +4,12 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using CouponMerchant.Data;
 using CouponMerchant.Models;
+using CouponMerchant.Utility;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CouponMerchant.Pages.ServiceTypes
 {
+    [Authorize(Roles = SD.AdminEndUser)]
     public class EditModel : PageModel
     {
         private readonly ApplicationDbContext _db;

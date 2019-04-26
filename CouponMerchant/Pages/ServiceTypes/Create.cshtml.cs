@@ -1,14 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using CouponMerchant.Data;
 using CouponMerchant.Models;
+using CouponMerchant.Utility;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace CouponMerchant.Pages.ServiceTypes
 {
+    [Authorize(Roles = SD.AdminEndUser)]
     public class CreateModel : PageModel
     {
         private readonly ApplicationDbContext _db;
