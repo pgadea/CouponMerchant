@@ -100,6 +100,11 @@ namespace CouponMerchant.Areas.Identity.Pages.Account
                     PhoneNumber = Input.PhoneNumber
                 };
 
+                if (!Input.IsAdmin)
+                {
+                    user.EmailConfirmed = true;
+                }
+
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
@@ -131,12 +136,9 @@ namespace CouponMerchant.Areas.Identity.Pages.Account
                     {
                         await _userManager.AddToRoleAsync(user, SD.CustomerEndUser);
                         await _signInManager.SignInAsync(user, isPersistent: false);
+                        _logger.LogInformation("User created a new account with password.");
                         return LocalRedirect(returnUrl);
                     }
-
-                    _logger.LogInformation("User created a new account with password.");
-
-                   
                 }
                 foreach (var error in result.Errors)
                 {
