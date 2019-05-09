@@ -1,21 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
+﻿using System.Security.Claims;
 using System.Threading.Tasks;
 using CouponMerchant.Data;
 using CouponMerchant.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace CouponMerchant.Pages.Cars
 {
+    [Authorize]
     public class CreateModel : PageModel
     {
         private readonly ApplicationDbContext _db;
 
         [BindProperty]
-        public Car Car { get; set; } = new Car();
+        public Car Car { get; set; }
+
+        [TempData]
+        public string StatusMessage { get; set; }
 
         public CreateModel(ApplicationDbContext db)
         {
@@ -31,21 +33,24 @@ namespace CouponMerchant.Pages.Cars
                 userId = claim.Value;
             }
 
-            Car.UserId = userId;
+            Car = new Car
+            {
+                UserId = userId
+            };
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
-            //if (!ModelState.IsValid)
-            //{
-            //    return Page();
-            //}
+            if (!ModelState.IsValid)
+            {
+                return Page();
+            }
 
-            //_db.ServiceType.Add(Car);
-            //await _db.SaveChangesAsync();
-
-            return RedirectToPage("Index");
+            _db.Car.Add(Car);
+            await _db.SaveChangesAsync();
+            StatusMessage = "Car has been added successfully.";
+            return RedirectToPage("Index", new { userId = Car.UserId });
         }
     }
 }

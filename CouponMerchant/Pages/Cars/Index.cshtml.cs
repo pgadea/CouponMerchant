@@ -1,22 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using CouponMerchant.Data;
 using CouponMerchant.Models.ViewModel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 
 namespace CouponMerchant.Pages.Cars
 {
+    [Authorize]
     public class IndexModel : PageModel
     {
         private readonly ApplicationDbContext _db;
 
         [BindProperty]
         public CarAndCustomerViewModel CarAndCustVM { get; set; }
+
+        [TempData]
+        public string StatusMessage { get; set; }
 
         public IndexModel(ApplicationDbContext db)
         {
