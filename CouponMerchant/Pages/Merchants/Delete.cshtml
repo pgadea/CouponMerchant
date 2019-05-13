@@ -1,0 +1,82 @@
+﻿@page
+@model CouponMerchant.Pages.Merchants.DeleteModel
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<br />
+<h2 class="text-info">Delete Merchant</h2>
+<br />
+<form method="post">
+    <input asp-for="Merchant.Id" hidden />
+    <div class=" border  backgroundWhite">
+        <div class="form-group">
+            <div class="row">
+                <div class="col-sm-2">
+                    <label asp-for="Merchant.Name" class="text-info"></label>
+                </div>
+                <div class="col-sm-5">
+                    <input asp-for="Merchant.Name" disabled class="form-control" />
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row">
+                <div class="col-sm-2">
+                    <label asp-for="Merchant.Email" class="text-info"></label>
+                </div>
+                <div class="col-sm-5">
+                    <input asp-for="Merchant.Email" disabled class="form-control" />
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row">
+                <div class="col-sm-2">
+                    <label asp-for="Merchant.PhoneNumber" class="text-info"></label>
+                </div>
+                <div class="col-sm-5">
+                    <input asp-for="Merchant.PhoneNumber" disabled class="form-control" />
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row">
+                <div class="col-sm-2">
+                    <label asp-for="Merchant.Address" class="text-info"></label>
+                </div>
+                <div class="col-sm-5">
+                    <input asp-for="Merchant.Address" disabled class="form-control" />
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row">
+                <div class="col-sm-2">
+                    <label asp-for="Merchant.City" class="text-info"></label>
+                </div>
+                <div class="col-sm-5">
+                    <input asp-for="Merchant.City" disabled class="form-control" />
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row">
+                <div class="col-sm-2">
+                    <label asp-for="Merchant.PostalCode" class="text-info"></label>
+                </div>
+                <div class="col-sm-5">
+                    <input asp-for="Merchant.PostalCode" disabled class="form-control" />
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-5 offset-2">
+                <partial name="_DeleteAndBackToListButton" />
+            </div>
+        </div>
+    </div>
+</form>
+

@@ -1,5 +1,5 @@
 ﻿@page
-@model CouponMerchant.Pages.Cars.IndexModel
+@model CouponMerchant.Pages.Deals.IndexModel
 @using CouponMerchant.Utility
 @{
     ViewData["Title"] = "Index";
@@ -7,13 +7,13 @@
 }
 
 <partial name="_StatusMessage" model="Model.StatusMessage" />
-<h2 class="text-info" py-2">Car Record For Customer</h2>
+<h2 class="text-info" py-2">Deals</h2>
 
 <div class="container backgroundWhite">
     <div class="card">
         <div class="card-header bg-dark text-light ml-0 row container">
             <div class="col-6">
-                <i class="fas fa-car"></i>
+                <i class="fas fa-comment-dollar"></i>
             </div>
             <div class="col-6 text-right">
                 @if(User.IsInRole(SD.AdminEndUser))
@@ -27,7 +27,7 @@
                 <div class="col-md-3">
                     <p>
                         <a asp-page="Create" asp-route-userId="@Model.CarAndCustVM.UserObj.Id" class="btn btn-info form-control">
-                            <i class="fas fa-plus"></i> &nbsp; Add New Car
+                            <i class="fas fa-plus"></i> &nbsp; Add New Deal
                         </a>
                     </p>
                 </div>
@@ -58,10 +58,10 @@
                     </div>
                 </div>
             </div>
-            @if (!Model.CarAndCustVM.Cars.Any())
+            @if (!Model.CarAndCustVM.Deals.Any())
             {
                 <p>
-                    No Car Found! Please add a car...
+                    No Deal Found! Please add a deal...
                 </p>
             }
             else
@@ -69,16 +69,16 @@
                 <table class="table table-striped border">
                     <tr class="table-secondary">
                         <th>
-                            @Html.DisplayNameFor(m => m.CarAndCustVM.Cars.FirstOrDefault().VIN)
+                            @Html.DisplayNameFor(m => m.CarAndCustVM.Deals.FirstOrDefault().DealName)
                         </th>
                         <th>
-                            @Html.DisplayNameFor(m => m.CarAndCustVM.Cars.FirstOrDefault().Make)
+                            @Html.DisplayNameFor(m => m.CarAndCustVM.Deals.FirstOrDefault().StartDate)
                         </th>
                         <th>
-                            @Html.DisplayNameFor(m => m.CarAndCustVM.Cars.FirstOrDefault().Model)
+                            @Html.DisplayNameFor(m => m.CarAndCustVM.Deals.FirstOrDefault().EndDate)
                         </th>
                         <th>
-                            @Html.DisplayNameFor(m => m.CarAndCustVM.Cars.FirstOrDefault().Color)
+                            @Html.DisplayNameFor(m => m.CarAndCustVM.Deals.FirstOrDefault().DollarValue)
                         </th>
                         <th></th>
                         @if (User.IsInRole(SD.AdminEndUser))
@@ -87,24 +87,24 @@
                         }
                         <th></th>
                     </tr>
-                    @foreach (var item in Model.CarAndCustVM.Cars)
+                    @foreach (var item in Model.CarAndCustVM.Deals)
                     {
                 <tr>
                     <td>
-                        @Html.DisplayFor(m => item.VIN)
+                        @Html.DisplayFor(m => item.DealName)
                     </td>
                     <td>
-                        @Html.DisplayFor(m => item.Make)
+                        @Html.DisplayFor(m => item.StartDate)
                     </td>
                     <td>
-                        @Html.DisplayFor(m => item.Model)
+                        @Html.DisplayFor(m => item.EndDate)
                     </td>
                     <td>
-                        @Html.DisplayFor(m => item.Color)
+                        @Html.DisplayFor(m => item.DollarValue)
                     </td>
                     <td>
                         <a class="btn btn-secondary" asp-page="../Services/History" asp-route-carId="@item.Id">
-                            <i class="fas fa-wrench"></i> &nbsp; Service History
+                            <i class="fas fa-history"></i> &nbsp; Deal History
                         </a>
                     </td>
                     @if (User.IsInRole(SD.AdminEndUser))

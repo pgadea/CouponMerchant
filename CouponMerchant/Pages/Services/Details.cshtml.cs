@@ -23,7 +23,7 @@ namespace CouponMerchant.Pages.Services
 
         public void OnGet(int serviceId)
         {
-            serviceHeader = _db.ServiceHeader.Include(s => s.Car).Include(s => s.Car.ApplicationUser).FirstOrDefault(s => s.Id == serviceId);
+            serviceHeader = _db.ServiceHeader.Include(s => s.Deal).Include(s => s.Deal.ApplicationUser).FirstOrDefault(s => s.Id == serviceId);
             serviceDetails = _db.ServiceDetails.Where(s => s.ServiceHeaderId == serviceId).ToList();
         }
     }

@@ -4,7 +4,7 @@ namespace CouponMerchant.Models.ViewModel
 {
     public class CarServiceViewModel
     {
-        public Car Car { get; set; }
+        public Deal Deal { get; set; }
         public ServiceHeader ServiceHeader { get; set; }
         public ServiceDetails ServiceDetails { get; set; }
 

@@ -10,7 +10,7 @@
         <h2 class="text-info py-2">Create New Service</h2>
     </div>
     <div class="col-3 offset-3 text-right py-2">
-        <a asp-page="../Cars/Index" asp-route-userId="@Model.CarServiceVM.Car.UserId" class="btn btn-outline-success form-control"> Back to List</a>
+        <a asp-page="../Deals/Index" asp-route-userId="@Model.CarServiceVM.Deal.UserId" class="btn btn-outline-success form-control"> Back to List</a>
     </div>
 </div>
 
@@ -23,14 +23,14 @@
                 <i class="far fa-user fa-2x"></i>
             </div>
             <div class="col-5">
-                <label class="text-info">@Model.CarServiceVM.Car.ApplicationUser.Name</label><br />
-                <label class="text-info">@Model.CarServiceVM.Car.ApplicationUser.Email / @Model.CarServiceVM.Car.ApplicationUser.PhoneNumber</label><br />
+                <label class="text-info">@Model.CarServiceVM.Deal.ApplicationUser.Name</label><br />
+                <label class="text-info">@Model.CarServiceVM.Deal.ApplicationUser.Email / @Model.CarServiceVM.Deal.ApplicationUser.PhoneNumber</label><br />
 
             </div>
 
             <div class="col-5 text-right">
-                <label class="text-info">@Model.CarServiceVM.Car.Make @Model.CarServiceVM.Car.Model @Model.CarServiceVM.Car.Style</label><br />
-                <label class="text-info">@Model.CarServiceVM.Car.Year </label>
+                <label class="text-info">@Model.CarServiceVM.Deal.DealName @Model.CarServiceVM.Deal.StartDate @Model.CarServiceVM.Deal.EndDate</label><br />
+                <label class="text-info">@Model.CarServiceVM.Deal.DollarValue </label>
             </div>
             <div class="col-1 text-center pt-3 text-white-50 ">
                 <i class="fas fa-car fa-2x"></i>
@@ -39,11 +39,11 @@
         <div class="card-body">
             <form method="post" style="width:100%">
                 <div class="container">
-                    <input hidden asp-for="CarServiceVM.Car.Make" />
-                    <input hidden asp-for="CarServiceVM.Car.Model" />
-                    <input hidden asp-for="CarServiceVM.Car.VIN" />
-                    <input hidden asp-for="CarServiceVM.Car.UserId" />
-                    <input hidden asp-for="CarServiceVM.Car.Id" />
+                    <input hidden asp-for="CarServiceVM.Deal.DealName" />
+                    <input hidden asp-for="CarServiceVM.Deal.StartDate" />
+                    <input hidden asp-for="CarServiceVM.Deal.EndDate" />
+                    <input hidden asp-for="CarServiceVM.Deal.UserId" />
+                    <input hidden asp-for="CarServiceVM.Deal.Id" />
 
                     <div class="border rounded p-2">
                         <div class="row">

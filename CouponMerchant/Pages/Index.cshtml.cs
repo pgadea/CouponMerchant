@@ -22,7 +22,7 @@ namespace CouponMerchant.Pages
                 return RedirectToPage("/Users/Index");
             }
 
-            return RedirectToPage("/Cars/Index");
+            return RedirectToPage("/Deals/Index");
         }
     }
 }

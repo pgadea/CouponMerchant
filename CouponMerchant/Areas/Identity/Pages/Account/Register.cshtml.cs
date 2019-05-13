@@ -94,9 +94,6 @@ namespace CouponMerchant.Areas.Identity.Pages.Account
                     UserName = Input.Email,
                     Email = Input.Email,
                     Name = Input.Name,
-                    Address = Input.Address,
-                    City = Input.City,
-                    PostalCode = Input.PostalCode,
                     PhoneNumber = Input.PhoneNumber
                 };
 

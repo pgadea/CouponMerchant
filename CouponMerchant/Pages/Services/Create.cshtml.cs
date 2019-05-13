@@ -29,13 +29,13 @@ namespace CouponMerchant.Pages.Services
         {
             CarServiceVM = new CarServiceViewModel
             {
-                Car = await _db.Car.Include(c => c.ApplicationUser).FirstOrDefaultAsync(c => c.Id == carId),
+                Deal = await _db.Deal.Include(c => c.ApplicationUser).FirstOrDefaultAsync(c => c.Id == carId),
                 ServiceHeader = new ServiceHeader()
             };
 
             var lstServiceTypeInShoppingCart = _db.ServiceShoppingCart
                                                             .Include(c => c.ServiceType)
-                                                            .Where(c => c.CarId == carId)
+                                                            .Where(c => c.DealId == carId)
                                                             .Select(c => c.ServiceType.Name)
                                                             .ToList();
 
@@ -45,7 +45,7 @@ namespace CouponMerchant.Pages.Services
 
             CarServiceVM.ServiceTypesList = lstService.ToList();
 
-            CarServiceVM.ServiceShoppingCart = _db.ServiceShoppingCart.Include(c => c.ServiceType).Where(c => c.CarId == carId).ToList();
+            CarServiceVM.ServiceShoppingCart = _db.ServiceShoppingCart.Include(c => c.ServiceType).Where(c => c.DealId == carId).ToList();
             CarServiceVM.ServiceHeader.TotalPrice = 0;
 
             foreach (var item in CarServiceVM.ServiceShoppingCart)
@@ -62,12 +62,12 @@ namespace CouponMerchant.Pages.Services
             if (ModelState.IsValid)
             {
                 CarServiceVM.ServiceHeader.DateAdded = DateTime.Now;
-                CarServiceVM.ServiceShoppingCart = _db.ServiceShoppingCart.Include(c => c.ServiceType).Where(c => c.CarId == CarServiceVM.Car.Id).ToList();
+                CarServiceVM.ServiceShoppingCart = _db.ServiceShoppingCart.Include(c => c.ServiceType).Where(c => c.DealId == CarServiceVM.Deal.Id).ToList();
                 foreach (var item in CarServiceVM.ServiceShoppingCart)
                 {
                     CarServiceVM.ServiceHeader.TotalPrice += item.ServiceType.Price;
                 }
-                CarServiceVM.ServiceHeader.CarId = CarServiceVM.Car.Id;
+                CarServiceVM.ServiceHeader.DealId = CarServiceVM.Deal.Id;
 
                 _db.ServiceHeader.Add(CarServiceVM.ServiceHeader);
                 await _db.SaveChangesAsync();
@@ -89,7 +89,7 @@ namespace CouponMerchant.Pages.Services
 
                 await _db.SaveChangesAsync();
 
-                return RedirectToPage("../Cars/Index", new { userId = CarServiceVM.Car.UserId });
+                return RedirectToPage("../Deals/Index", new { userId = CarServiceVM.Deal.UserId });
             }
 
             return Page();
@@ -99,24 +99,24 @@ namespace CouponMerchant.Pages.Services
         {
             ServiceShoppingCart objServiceCart = new ServiceShoppingCart()
             {
-                CarId = CarServiceVM.Car.Id,
+                DealId = CarServiceVM.Deal.Id,
                 ServiceTypeId = CarServiceVM.ServiceDetails.ServiceTypeId
             };
 
             _db.ServiceShoppingCart.Add(objServiceCart);
             await _db.SaveChangesAsync();
-            return RedirectToPage("Create", new { carId = CarServiceVM.Car.Id });
+            return RedirectToPage("Create", new { carId = CarServiceVM.Deal.Id });
         }
 
         public async Task<IActionResult> OnPostRemoveFromCart(int serviceTypeId)
         {
             ServiceShoppingCart objServiceCart = _db.ServiceShoppingCart
-                .FirstOrDefault(u => u.CarId == CarServiceVM.Car.Id && u.ServiceTypeId == serviceTypeId);
+                .FirstOrDefault(u => u.DealId == CarServiceVM.Deal.Id && u.ServiceTypeId == serviceTypeId);
 
 
             _db.ServiceShoppingCart.Remove(objServiceCart);
             await _db.SaveChangesAsync();
-            return RedirectToPage("Create", new { carId = CarServiceVM.Car.Id });
+            return RedirectToPage("Create", new { carId = CarServiceVM.Deal.Id });
         }
     }
 }

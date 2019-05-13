@@ -1,0 +1,103 @@
+﻿@page
+@model CouponMerchant.Pages.Merchants.EditModel
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<br />
+<h2 class="text-info">Edit Merchant</h2>
+<br />
+<form method="post">
+    <div class=" border  backgroundWhite">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input asp-for="Merchant.Id" hidden />
+        <div class="form-group">
+            <div class="row">
+                <div class="col-sm-2">
+                    <label asp-for="Merchant.Name" class="text-info"></label>
+                </div>
+                <div class="col-sm-5">
+                    <input asp-for="Merchant.Name" class="form-control" />
+                </div>
+            </div>
+            <span asp-validation-for="Merchant.Name" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <div class="row">
+                <div class="col-sm-2">
+                    <label asp-for="Merchant.Email" class="text-info"></label>
+                </div>
+                <div class="col-sm-5">
+                    <input asp-for="Merchant.Email" type="email" class="form-control" />
+                </div>
+            </div>
+            <span asp-validation-for="Merchant.Email" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <div class="row">
+                <div class="col-sm-2">
+                    <label asp-for="Merchant.PhoneNumber" class="text-info"></label>
+                </div>
+                <div class="col-sm-5">
+                    <input asp-for="Merchant.PhoneNumber" class="form-control" />
+                </div>
+            </div>
+            <span asp-validation-for="Merchant.PhoneNumber" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <div class="row">
+                <div class="col-sm-2">
+                    <label asp-for="Merchant.Address" class="text-info"></label>
+                </div>
+                <div class="col-sm-5">
+                    <input asp-for="Merchant.Address" class="form-control" />
+                </div>
+            </div>
+            <span asp-validation-for="Merchant.Address" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <div class="row">
+                <div class="col-sm-2">
+                    <label asp-for="Merchant.City" class="text-info"></label>
+                </div>
+                <div class="col-sm-5">
+                    <input asp-for="Merchant.City" class="form-control" />
+                </div>
+            </div>
+            <span asp-validation-for="Merchant.City" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <div class="row">
+                <div class="col-sm-2">
+                    <label asp-for="Merchant.State" class="text-info"></label>
+                </div>
+                <div class="col-sm-5">
+                    <input asp-for="Merchant.State" class="form-control" />
+                </div>
+            </div>
+            <span asp-validation-for="Merchant.State" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <div class="row">
+                <div class="col-sm-2">
+                    <label asp-for="Merchant.PostalCode" class="text-info"></label>
+                </div>
+                <div class="col-sm-5">
+                    <input asp-for="Merchant.PostalCode" class="form-control" />
+                </div>
+            </div>
+            <span asp-validation-for="Merchant.PostalCode" class="text-danger"></span>
+        </div>
+        <div class="form-group row">
+            <div class="col-5 offset-2">
+                <partial name="_EditAndBackToListButton" />
+            </div>
+        </div>
+    </div>
+</form>
+@section Scripts{
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+

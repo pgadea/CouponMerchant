@@ -10,7 +10,7 @@
         <h2 class="text-info py-2">Service Details</h2>
     </div>
     <div class="col-3 offset-3 text-right py-2">
-        <a asp-page="/Services/History" asp-route-carId="@Model.serviceHeader.CarId" class="btn btn-outline-success form-control"> Back to List</a>
+        <a asp-page="/Services/History" asp-route-carId="@Model.serviceHeader.DealId" class="btn btn-outline-success form-control"> Back to List</a>
     </div>
 </div>
 
@@ -21,17 +21,17 @@
                 <i class="far fa-user fa-2x"></i>
             </div>
             <div class="col-5">
-                <label class="text-info">@Model.serviceHeader.Car.ApplicationUser.Name</label><br />
-                <label class="text-info">@Model.serviceHeader.Car.ApplicationUser.Email / @Model.serviceHeader.Car.ApplicationUser.PhoneNumber</label><br />
+                <label class="text-info">@Model.serviceHeader.Deal.ApplicationUser.Name</label><br />
+                <label class="text-info">@Model.serviceHeader.Deal.ApplicationUser.Email / @Model.serviceHeader.Deal.ApplicationUser.PhoneNumber</label><br />
 
             </div>
 
             <div class="col-5 text-right">
-                <label class="text-info">@Model.serviceHeader.Car.Make @Model.serviceHeader.Car.Model @Model.serviceHeader.Car.Style</label><br />
-                <label class="text-info">@Model.serviceHeader.Car.Year </label>
+                <label class="text-info">@Model.serviceHeader.Deal.DealName @Model.serviceHeader.Deal.StartDate @Model.serviceHeader.Deal.EndDate</label><br />
+                <label class="text-info">@Model.serviceHeader.Deal.DollarValue </label>
             </div>
             <div class="col-1 text-center pt-3 text-white-50 ">
-                <i class="fas fa-car fa-2x"></i>
+                <i class="fas fa-dollar-sign fa-2x"></i>
             </div>
         </div>
         <div class="card-body">

@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 
-namespace CouponMerchant.Pages.Cars
+namespace CouponMerchant.Pages.Deals
 {
     [Authorize]
     public class DeleteModel : PageModel
@@ -22,7 +22,7 @@ namespace CouponMerchant.Pages.Cars
         }
 
         [BindProperty]
-        public Car Car { get; set; }
+        public Deal Deal { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -31,10 +31,10 @@ namespace CouponMerchant.Pages.Cars
                 return NotFound();
             }
 
-            Car = await _db.Car
+            Deal = await _db.Deal
                 .Include(c => c.ApplicationUser).FirstOrDefaultAsync(m => m.Id == id);
 
-            if (Car == null)
+            if (Deal == null)
             {
                 return NotFound();
             }
@@ -43,15 +43,15 @@ namespace CouponMerchant.Pages.Cars
 
         public async Task<IActionResult> OnPostAsync()
         {
-            if (Car == null)
+            if (Deal == null)
             {
                 return NotFound();
             }
-            var userId = Car.UserId;
+            var userId = Deal.UserId;
 
-            _db.Car.Remove(Car);
+            _db.Deal.Remove(Deal);
             await _db.SaveChangesAsync();
-            StatusMessage = "Car deleted successfully.";
+            StatusMessage = "Deal deleted successfully.";
             return RedirectToPage("./Index", new { userId });
         }
     }

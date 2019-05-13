@@ -19,36 +19,57 @@ namespace CouponMerchant.Data.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("CouponMerchant.Models.Car", b =>
+            modelBuilder.Entity("CouponMerchant.Models.Deal", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Color");
-
-                    b.Property<string>("Make")
+                    b.Property<string>("DealName")
                         .IsRequired();
 
-                    b.Property<double>("Miles");
+                    b.Property<decimal>("DollarValue");
 
-                    b.Property<string>("Model")
-                        .IsRequired();
+                    b.Property<DateTime>("EndDate");
 
-                    b.Property<string>("Style");
+                    b.Property<DateTime>("StartDate");
+
+                    b.Property<string>("Url");
 
                     b.Property<string>("UserId");
-
-                    b.Property<string>("VIN")
-                        .IsRequired();
-
-                    b.Property<int>("Year");
 
                     b.HasKey("Id");
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Car");
+                    b.ToTable("Deal");
+                });
+
+            modelBuilder.Entity("CouponMerchant.Models.Merchant", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Address");
+
+                    b.Property<string>("City");
+
+                    b.Property<string>("Email");
+
+                    b.Property<bool>("IsActive");
+
+                    b.Property<string>("Name");
+
+                    b.Property<string>("PhoneNumber");
+
+                    b.Property<string>("PostalCode");
+
+                    b.Property<string>("State");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Merchant");
                 });
 
             modelBuilder.Entity("CouponMerchant.Models.ServiceDetails", b =>
@@ -80,9 +101,9 @@ namespace CouponMerchant.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("CarId");
-
                     b.Property<DateTime>("DateAdded");
+
+                    b.Property<int>("DealId");
 
                     b.Property<string>("Details");
 
@@ -92,7 +113,7 @@ namespace CouponMerchant.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CarId");
+                    b.HasIndex("DealId");
 
                     b.ToTable("ServiceHeader");
                 });
@@ -103,13 +124,13 @@ namespace CouponMerchant.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("CarId");
+                    b.Property<int>("DealId");
 
                     b.Property<int>("ServiceTypeId");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CarId");
+                    b.HasIndex("DealId");
 
                     b.HasIndex("ServiceTypeId");
 
@@ -302,18 +323,12 @@ namespace CouponMerchant.Data.Migrations
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
 
-                    b.Property<string>("Address");
-
-                    b.Property<string>("City");
-
                     b.Property<string>("Name");
-
-                    b.Property<string>("PostalCode");
 
                     b.HasDiscriminator().HasValue("ApplicationUser");
                 });
 
-            modelBuilder.Entity("CouponMerchant.Models.Car", b =>
+            modelBuilder.Entity("CouponMerchant.Models.Deal", b =>
                 {
                     b.HasOne("CouponMerchant.Models.ApplicationUser", "ApplicationUser")
                         .WithMany()
@@ -335,17 +350,17 @@ namespace CouponMerchant.Data.Migrations
 
             modelBuilder.Entity("CouponMerchant.Models.ServiceHeader", b =>
                 {
-                    b.HasOne("CouponMerchant.Models.Car", "Car")
+                    b.HasOne("CouponMerchant.Models.Deal", "Deal")
                         .WithMany()
-                        .HasForeignKey("CarId")
+                        .HasForeignKey("DealId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("CouponMerchant.Models.ServiceShoppingCart", b =>
                 {
-                    b.HasOne("CouponMerchant.Models.Car", "Car")
+                    b.HasOne("CouponMerchant.Models.Deal", "Deal")
                         .WithMany()
-                        .HasForeignKey("CarId")
+                        .HasForeignKey("DealId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("CouponMerchant.Models.ServiceType", "ServiceType")

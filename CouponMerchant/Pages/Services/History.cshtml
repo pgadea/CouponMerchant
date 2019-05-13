@@ -10,14 +10,14 @@
         <h2 class="text-info py-2">Service History</h2>
     </div>
     <div class="col-3 offset-3 text-right py-2">
-        <a asp-page="../Cars/Index" asp-route-userId="@Model.UserId" class="btn btn-outline-success form-control"> Back to List</a>
+        <a asp-page="../Deals/Index" asp-route-userId="@Model.UserId" class="btn btn-outline-success form-control"> Back to List</a>
     </div>
 </div>
 
 @if (Model.ServiceHeader.Count == 0)
 {
     <div class="backgroundWhite">
-        <p>No Service record found...</p>
+        <p>No record found...</p>
     </div>
 }
 else
@@ -29,17 +29,17 @@ else
                     <i class="far fa-user fa-2x"></i>
                 </div>
                 <div class="col-5">
-                    <label class="text-info">@Model.ServiceHeader[0].Car.ApplicationUser.Name</label><br />
-                    <label class="text-info">@Model.ServiceHeader[0].Car.ApplicationUser.Email / @Model.ServiceHeader[0].Car.ApplicationUser.PhoneNumber</label><br />
+                    <label class="text-info">@Model.ServiceHeader[0].Deal.ApplicationUser.Name</label><br />
+                    <label class="text-info">@Model.ServiceHeader[0].Deal.ApplicationUser.Email / @Model.ServiceHeader[0].Deal.ApplicationUser.PhoneNumber</label><br />
 
                 </div>
 
                 <div class="col-5 text-right">
-                    <label class="text-info">@Model.ServiceHeader[0].Car.Make @Model.ServiceHeader[0].Car.Model @Model.ServiceHeader[0].Car.Style</label><br />
-                    <label class="text-info">@Model.ServiceHeader[0].Car.Year </label>
+                    <label class="text-info">@Model.ServiceHeader[0].Deal.DealName @Model.ServiceHeader[0].Deal.StartDate @Model.ServiceHeader[0].Deal.EndDate</label><br />
+                    <label class="text-info">@Model.ServiceHeader[0].Deal.DollarValue </label>
                 </div>
                 <div class="col-1 text-center pt-3 text-white-50 ">
-                    <i class="fas fa-car fa-2x"></i>
+                    <i class="fas fa-dollar-sign fa-2x"></i>
                 </div>
             </div>
             <div class="card-body">

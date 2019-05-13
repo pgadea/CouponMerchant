@@ -1,0 +1,71 @@
+﻿@page
+@model CouponMerchant.Pages.Deals.DeleteModel
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<br />
+<h2 class="text-info">Delete Deal</h2>
+<br />
+<form method="post">
+    <div class=" border  backgroundWhite">
+        <input type="hidden" asp-for="Deal.Id" />
+        <input type="hidden" asp-for="Deal.UserId" />
+        <div class="form-group row ">
+            <div class="col-2">
+                <label asp-for="Deal.DealName" class="col-form-label"></label>
+            </div>
+            <div class="col-5">
+                <input asp-for="Deal.DealName" disabled class="form-control" />
+            </div>
+        </div>
+        <div class="form-group row ">
+            <div class="col-2">
+                <label asp-for="Deal.StartDate" class="col-form-label"></label>
+            </div>
+            <div class="col-5">
+                <input asp-for="Deal.StartDate" disabled class="form-control" />
+            </div>
+        </div>
+        <div class="form-group row ">
+            <div class="col-2">
+                <label asp-for="Deal.EndDate" class="col-form-label"></label>
+            </div>
+            <div class="col-5">
+                <input asp-for="Deal.EndDate" disabled class="form-control" />
+            </div>
+        </div>
+        <div class="form-group row ">
+            <div class="col-2">
+                <label asp-for="Deal.DollarValue" class="col-form-label"></label>
+            </div>
+            <div class="col-5">
+                <input asp-for="Deal.DollarValue" disabled class="form-control" />
+            </div>
+        </div>
+        <div class="form-group row ">
+            <div class="col-2">
+                <label asp-for="Deal.Url" class="col-form-label"></label>
+            </div>
+            <div class="col-5">
+                <input asp-for="Deal.Url" disabled class="form-control" />
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-5 offset-2">
+                <div class="row">
+                    <div class="col-6">
+                        <input type="submit" class="btn btn-danger form-control" value="Delete" />
+                    </div>
+                    <div class="col-6">
+                        <a asp-page="Index" asp-route-userId="@Model.Deal.UserId" class="btn btn-success form-control">Back to List</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</form>
+

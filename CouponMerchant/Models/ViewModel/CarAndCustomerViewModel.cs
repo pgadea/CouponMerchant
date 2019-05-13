@@ -6,6 +6,6 @@ namespace CouponMerchant.Models.ViewModel
     {
         public ApplicationUser UserObj { get; set; }
 
-        public IEnumerable<Car> Cars { get; set; }
+        public IEnumerable<Deal> Deals { get; set; }
     }
 }

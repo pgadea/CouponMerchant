@@ -16,9 +16,9 @@ namespace CouponMerchant.Models
         [DisplayFormat(DataFormatString = "{0:MMM dd yyyy}")]
         public DateTime DateAdded { get; set; }
 
-        public int CarId { get; set; }
+        public int DealId { get; set; }
 
-        [ForeignKey("CarId")]
-        public virtual Car Car { get; set; }
+        [ForeignKey("DealId")]
+        public virtual Deal Deal { get; set; }
     }
 }

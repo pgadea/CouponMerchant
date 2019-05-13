@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 
-namespace CouponMerchant.Pages.Cars
+namespace CouponMerchant.Pages.Deals
 {
     [Authorize]
     public class IndexModel : PageModel
@@ -37,7 +37,7 @@ namespace CouponMerchant.Pages.Cars
 
             CarAndCustVM = new CarAndCustomerViewModel
             {
-                Cars = await _db.Car.Where(c => c.UserId == userId).ToListAsync(),
+                Deals = await _db.Deal.Where(c => c.UserId == userId).ToListAsync(),
                 UserObj = await _db.ApplicationUser.FirstOrDefaultAsync(u => u.Id == userId)
             };
 

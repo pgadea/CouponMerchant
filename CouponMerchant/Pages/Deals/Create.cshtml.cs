@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace CouponMerchant.Pages.Cars
+namespace CouponMerchant.Pages.Deals
 {
     [Authorize]
     public class CreateModel : PageModel
@@ -14,7 +14,7 @@ namespace CouponMerchant.Pages.Cars
         private readonly ApplicationDbContext _db;
 
         [BindProperty]
-        public Car Car { get; set; }
+        public Deal Deal { get; set; }
 
         [TempData]
         public string StatusMessage { get; set; }
@@ -33,7 +33,7 @@ namespace CouponMerchant.Pages.Cars
                 userId = claim.Value;
             }
 
-            Car = new Car
+            Deal = new Deal
             {
                 UserId = userId
             };
@@ -47,10 +47,10 @@ namespace CouponMerchant.Pages.Cars
                 return Page();
             }
 
-            _db.Car.Add(Car);
+            _db.Deal.Add(Deal);
             await _db.SaveChangesAsync();
-            StatusMessage = "Car has been added successfully.";
-            return RedirectToPage("Index", new { userId = Car.UserId });
+            StatusMessage = "Deal has been added successfully.";
+            return RedirectToPage("Index", new { userId = Deal.UserId });
         }
     }
 }

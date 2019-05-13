@@ -1,0 +1,71 @@
+﻿@page
+@model CouponMerchant.Pages.Deals.CreateModel
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<br />
+<h2 class="text-info">Add New Deal</h2>
+<br />
+<form method="post">
+    <div class="border backgroundWhite">
+        <input hidden asp-for="Deal.UserId" />
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group row">
+            <div class="col-2">
+                <label asp-for="Deal.DealName"></label>
+            </div>
+            <div class="col-5">
+                <input asp-for="Deal.DealName" class="form-control" />
+            </div>
+            <span asp-validation-for="Deal.DealName" class="text-danger"></span>
+        </div>
+        <div class="form-group row">
+            <div class="col-2">
+                <label asp-for="Deal.StartDate"></label>
+            </div>
+            <div class="col-5">
+                <input asp-for="Deal.StartDate" type="date" class="form-control" />
+            </div>
+            <span asp-validation-for="Deal.StartDate" class="text-danger"></span>
+        </div>
+        <div class="form-group row">
+            <div class="col-2">
+                <label asp-for="Deal.EndDate"></label>
+            </div>
+            <div class="col-5">
+                <input asp-for="Deal.EndDate" type="date" class="form-control" />
+            </div>
+            <span asp-validation-for="Deal.EndDate" class="text-danger"></span>
+        </div>
+        <div class="form-group row">
+            <div class="col-2">
+                <label asp-for="Deal.DollarValue"></label>
+            </div>
+            <div class="col-5">
+                <input asp-for="Deal.DollarValue" class="form-control" />
+            </div>
+            <span asp-validation-for="Deal.DollarValue" class="text-danger"></span>
+        </div>
+        <div class="form-group row">
+            <div class="col-2">
+                <label asp-for="Deal.Url"></label>
+            </div>
+            <div class="col-5">
+                <input asp-for="Deal.Url" type="url" class="form-control" />
+            </div>
+            <span asp-validation-for="Deal.Url" class="text-danger"></span>
+        </div>
+        <div class="form-group row">
+            <div class="col-5 offset-2">
+                <partial name="_CreateAndBackToListButton" />
+            </div>
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}
+

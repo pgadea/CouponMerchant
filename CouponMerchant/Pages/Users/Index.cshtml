@@ -9,11 +9,11 @@
     <br /><br />
     <div class="row">
         <div class="col-6">
-            <h2 class="text-info">Customers List</h2>
+            <h2 class="text-info">Users List</h2>
         </div>
         <div class="col-6 text-right">
             <a asp-page="/Account/Register" asp-area="Identity" class="btn btn-info">
-                <i class="fas fa-plus"></i>&nbsp; Create New Customer
+                <i class="fas fa-plus"></i>&nbsp; Create New User
             </a>
         </div>
     </div>
@@ -24,10 +24,10 @@
                 <div class="col-11">
                     <div class="row" style="padding-top:10px">
                         <div class="col-4">
-                            @Html.Editor("searchEmail", new { htmlAttributes = new { @class = "form-control", placeholder = "Email..." } })
+                            @Html.Editor("searchName", new { htmlAttributes = new { @class = "form-control", placeholder = "Name..." } })
                         </div>
                         <div class="col-4">
-                            @Html.Editor("searchName", new { htmlAttributes = new { @class = "form-control", placeholder = "Name..." } })
+                            @Html.Editor("searchEmail", new { htmlAttributes = new { @class = "form-control", placeholder = "Email..." } })
                         </div>
                         <div class="col-4">
                             @Html.Editor("searchPhone", new { htmlAttributes = new { @class = "form-control", placeholder = "Phone..." } })
@@ -72,8 +72,8 @@
                             @Html.DisplayFor(m => item.Email)
                         </td>
                         <td>
-                            <a asp-page="../cars/Index" asp-route-userId="@item.Id" style="text-decoration:none;">
-                                <img src="~/images/car.png" width="40"/> &nbsp; View Cars
+                            <a asp-page="../deals/Index" asp-route-userId="@item.Id" style="text-decoration:none;">
+                                <img src="~/images/bazing-logo.jpg" width="40"/> &nbsp; View Deals
                              </a>
                         </td>
                         <td>

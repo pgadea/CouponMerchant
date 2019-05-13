@@ -54,10 +54,9 @@ namespace CouponMerchant.Pages.Users
                 else
                 {
                     userInDb.Name = ApplicationUser.Name;
+                    userInDb.Email = ApplicationUser.Email;
+                    userInDb.UserName = ApplicationUser.Email;
                     userInDb.PhoneNumber = ApplicationUser.PhoneNumber;
-                    userInDb.Address = ApplicationUser.Address;
-                    userInDb.City = ApplicationUser.City;
-                    userInDb.PostalCode = ApplicationUser.PostalCode;
 
                     await _db.SaveChangesAsync();
                     return RedirectToPage("Index");
