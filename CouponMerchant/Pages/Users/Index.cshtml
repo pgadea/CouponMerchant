@@ -9,7 +9,7 @@
     <br /><br />
     <div class="row">
         <div class="col-6">
-            <h2 class="text-info">Users List</h2>
+            <h2 class="text-info">Users</h2>
         </div>
         <div class="col-6 text-right">
             <a asp-page="/Account/Register" asp-area="Identity" class="btn btn-info">
@@ -51,12 +51,14 @@
                         @Html.DisplayNameFor(m => m.UsersListVM.ApplicationUsers[0].Name)
                     </th>
                     <th>
+                        @Html.DisplayNameFor(m => m.UsersListVM.ApplicationUsers[0].Email)
+                    </th>
+                    <th>
                         @Html.DisplayNameFor(m => m.UsersListVM.ApplicationUsers[0].PhoneNumber)
                     </th>
                     <th>
-                        @Html.DisplayNameFor(m => m.UsersListVM.ApplicationUsers[0].Email)
+                        @Html.DisplayNameFor(m => m.UsersListVM.ApplicationUsers[0].IsAdmin)
                     </th>
-                    <th></th>
                     <th></th>
                 </tr>
                 @foreach (var item in Model.UsersListVM.ApplicationUsers)
@@ -66,15 +68,13 @@
                             @Html.DisplayFor(m => item.Name)
                         </td>
                         <td>
-                            @Html.DisplayFor(m => item.PhoneNumber)
-                        </td>
-                        <td>
                             @Html.DisplayFor(m => item.Email)
                         </td>
                         <td>
-                            <a asp-page="../deals/Index" asp-route-userId="@item.Id" style="text-decoration:none;">
-                                <img src="~/images/bazing-logo.jpg" width="40"/> &nbsp; View Deals
-                             </a>
+                            @Html.DisplayFor(m => item.PhoneNumber)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => item.IsAdmin)
                         </td>
                         <td>
                             <a class="btn btn-primary text-white" asp-page="Edit" asp-route-Id="@item.Id">

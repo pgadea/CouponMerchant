@@ -1,6 +1,6 @@
 ﻿namespace CouponMerchant.Data
 {
-    interface IDbInitializer
+    public interface IDbInitializer
     {
         void Initialize();
     }

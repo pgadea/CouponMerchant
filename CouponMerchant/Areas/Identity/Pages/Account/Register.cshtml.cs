@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using CouponMerchant.Data;
@@ -67,15 +65,10 @@ namespace CouponMerchant.Areas.Identity.Pages.Account
             [Required]
             public string Name { get; set; }
 
-            public string Address { get; set; }
-
-            public string City { get; set; }
-
-            public string PostalCode { get; set; }
-
             [Required]
             public string PhoneNumber { get; set; }
 
+            [Display(Name = "Is Admin")]
             public bool IsAdmin { get; set; }
         }
 
@@ -94,7 +87,8 @@ namespace CouponMerchant.Areas.Identity.Pages.Account
                     UserName = Input.Email,
                     Email = Input.Email,
                     Name = Input.Name,
-                    PhoneNumber = Input.PhoneNumber
+                    PhoneNumber = Input.PhoneNumber,
+                    IsAdmin = Input.IsAdmin
                 };
 
                 if (!Input.IsAdmin)

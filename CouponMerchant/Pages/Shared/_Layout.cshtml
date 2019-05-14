@@ -35,14 +35,14 @@
 
                         @if (User.IsInRole(SD.AdminEndUser))
                         {
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-page="/ServiceTypes/Index">Some Page</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-page="/Users/Index">Users</a>
-                        </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-page="/Users/Index">Users</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-page="/Merchants/Index">Merchants</a>
+                            </li>
                         }
-                        @if (User.IsInRole(SD.CustomerEndUser))
+                        @if (User.IsInRole(SD.CustomerEndUser) || User.IsInRole(SD.AdminEndUser))
                         {
                             <li class="nav-item">
                                 <a class="nav-link" asp-area="" asp-page="/Deals/Index">Deals</a>

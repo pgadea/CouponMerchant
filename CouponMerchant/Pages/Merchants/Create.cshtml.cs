@@ -36,7 +36,7 @@ namespace CouponMerchant.Pages.Merchants
             _db.Merchant.Add(Merchant);
             await _db.SaveChangesAsync();
             StatusMessage = "Merhant has been added successfully.";
-            return RedirectToPage("Index", new { userId = Merchant.Id });
+            return RedirectToPage("Index");
         }
     }
 }

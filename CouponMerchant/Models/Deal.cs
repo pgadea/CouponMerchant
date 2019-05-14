@@ -10,7 +10,7 @@ namespace CouponMerchant.Models
         public int Id { get; set; }
 
         [Required]
-        public string DealName { get; set; }
+        public string Name { get; set; }
 
         [Required]
         public DateTime StartDate { get; set; }
@@ -22,9 +22,9 @@ namespace CouponMerchant.Models
 
         public string Url { get; set; }
 
-        public string UserId { get; set; }
+        public int MerchantId { get; set; }
 
-        [ForeignKey("UserId")]
-        public virtual ApplicationUser ApplicationUser { get; set; }
+        [ForeignKey("MerchantId")]
+        public virtual Merchant Merchant { get; set; }
     }
 }

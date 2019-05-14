@@ -7,131 +7,98 @@
 }
 
 <partial name="_StatusMessage" model="Model.StatusMessage" />
-<h2 class="text-info" py-2">Deals</h2>
+<form method="get" asp-page="Index">
+    <br /><br />
+    <div class="row">
+        <div class="col-6">
+            <h2 class="text-info">Deals</h2>
+        </div>
+        <div class="col-3 offset-3 text-right">
+            <a asp-page="Create" class="btn btn-info form-control">
+                <i class="fas fa-plus"></i> &nbsp; Add New Deal
+            </a>
+        </div>
+    </div>
 
-<div class="container backgroundWhite">
-    <div class="card">
-        <div class="card-header bg-dark text-light ml-0 row container">
-            <div class="col-6">
-                <i class="fas fa-comment-dollar"></i>
-            </div>
-            <div class="col-6 text-right">
-                @if(User.IsInRole(SD.AdminEndUser))
-                {
-                    <a asp-page="/Users/Index" class="btn btn-outline-info btn-sm">Back to Users</a>
-                }
+    <div class="border backgroundWhite">
+        <div style="height:60px;" class="container border border-secondary">
+            <div class="row">
+                <div class="col-11">
+                    <div class="row" style="padding-top:10px">
+                        <div class="col-4">
+                            @Html.Editor("searchName", new { htmlAttributes = new { @class = "form-control", placeholder = "Name..." } })
+                        </div>
+                        <div class="col-4">
+                            @Html.Editor("searchCity", new { htmlAttributes = new { @class = "form-control", placeholder = "City..." } })
+                        </div>
+                        <div class="col-4">
+                            @Html.Editor("searchState", new { htmlAttributes = new { @class = "form-control", placeholder = "State..." } })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-1">
+                    <div class="row" style="padding-top:10px; padding-right:15px;">
+                        <button type="submit" name="submit" value="Search" class="btn btn-info form-control">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="card-body">
-            <div class="row" style="padding-bottom:40px; padding-top:20px;">
-                <div class="col-md-3">
-                    <p>
-                        <a asp-page="Create" asp-route-userId="@Model.CarAndCustVM.UserObj.Id" class="btn btn-info form-control">
-                            <i class="fas fa-plus"></i> &nbsp; Add New Deal
-                        </a>
-                    </p>
-                </div>
-                <div class="col-md-6 offset-md-3">
-                    <div class="row">
-                        <div class="col-sm-4">
-                            <label asp-for="CarAndCustVM.UserObj.Name"></label>
-                        </div>
-                        <div class="col-sm-8" style="padding-bottom:5px;">
-                            <input asp-for="CarAndCustVM.UserObj.Name" disabled class="form-control" />
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-4">
-                            <label asp-for="CarAndCustVM.UserObj.PhoneNumber"></label>
-                        </div>
-                        <div class="col-sm-8" style="padding-bottom:5px;">
-                            <input asp-for="CarAndCustVM.UserObj.PhoneNumber" disabled class="form-control" />
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-4">
-                            <label asp-for="CarAndCustVM.UserObj.Email"></label>
-                        </div>
-                        <div class="col-sm-8" style="padding-bottom:5px;">
-                            <input asp-for="CarAndCustVM.UserObj.Email" disabled class="form-control" />
-                        </div>
-                    </div>
-                </div>
-            </div>
-            @if (!Model.CarAndCustVM.Deals.Any())
-            {
-                <p>
-                    No Deal Found! Please add a deal...
-                </p>
-            }
-            else
-            {
-                <table class="table table-striped border">
-                    <tr class="table-secondary">
-                        <th>
-                            @Html.DisplayNameFor(m => m.CarAndCustVM.Deals.FirstOrDefault().DealName)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(m => m.CarAndCustVM.Deals.FirstOrDefault().StartDate)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(m => m.CarAndCustVM.Deals.FirstOrDefault().EndDate)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(m => m.CarAndCustVM.Deals.FirstOrDefault().DollarValue)
-                        </th>
-                        <th></th>
-                        @if (User.IsInRole(SD.AdminEndUser))
-                        {
-                            <th></th>
-                        }
-                        <th></th>
-                    </tr>
-                    @foreach (var item in Model.CarAndCustVM.Deals)
-                    {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(m => item.DealName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(m => item.StartDate)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(m => item.EndDate)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(m => item.DollarValue)
-                    </td>
-                    <td>
-                        <a class="btn btn-secondary" asp-page="../Services/History" asp-route-carId="@item.Id">
-                            <i class="fas fa-history"></i> &nbsp; Deal History
-                        </a>
-                    </td>
-                    @if (User.IsInRole(SD.AdminEndUser))
-                    {
-                    <td>
-                        <a class="btn btn-success" asp-page="../Services/Create" asp-route-carId="@item.Id">
-                            <i class="fas fa-plus"></i> &nbsp; New Service
-                        </a>
-                    </td>
-                    }
-                    <td>
-                        <div class="btn-group" role="group">
+        <br />
+        <div>
+            <table class="table table-striped border">
+                <tr class="table-secondary">
+                    <th>
+                        @Html.DisplayNameFor(m => m.DealsVM.Deals.First().Name)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(m => m.DealsVM.Deals.First().StartDate)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(m => m.DealsVM.Deals.First().EndDate)
+                    </th>
+                    <th></th>
+                    <th></th>
+                </tr>
+                @foreach (var item in Model.DealsVM.Deals)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(m => item.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => item.StartDate)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => item.EndDate)
+                        </td>
+                        <td>
+                            <a asp-page="../Merchants/Index" asp-route-merchantId="@item.MerchantId" style="text-decoration:none;">
+                                <i class="fas fa-file-invoice-dollar"></i> &nbsp; View Deals
+                            </a>
+                        </td>
+                        <td>
                             <a class="btn btn-primary text-white" asp-page="Edit" asp-route-Id="@item.Id">
                                 <i class="fas fa-edit"></i>
-                            </a> &nbsp;&nbsp;
+                            </a>
                             <a class="btn btn-danger text-white" asp-page="Delete" asp-route-Id="@item.Id">
                                 <i class="fas fa-trash"></i>
                             </a>
+                        </td>
+                    </tr>
+                }
+                <tr>
+                    <td colspan="5" class="text-right">
+                        <div page-model="@Model.DealsVM.PagingInfo" asp-action="Index" page-class="btn border"
+                             page-class-normal="btn btn-light" page-class-selected="btn btn-info active" class="btn-group">
                         </div>
                     </td>
                 </tr>
-                    }
-                </table>
-            }
+            </table>
         </div>
     </div>
-</div>
+</form>
 
     
 

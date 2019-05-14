@@ -24,15 +24,10 @@ namespace CouponMerchant.Pages.Deals
         [BindProperty]
         public Deal Deal { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public async Task<IActionResult> OnGetAsync(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
             Deal = await _db.Deal
-                .Include(c => c.ApplicationUser).FirstOrDefaultAsync(m => m.Id == id);
+                .Include(c => c.Merchant).FirstOrDefaultAsync(m => m.Id == id);
 
             if (Deal == null)
             {
@@ -53,7 +48,7 @@ namespace CouponMerchant.Pages.Deals
 
             await _db.SaveChangesAsync();
             StatusMessage = "Deal updated successfully.";
-            return RedirectToPage("./Index", new { userId = Deal.UserId });
+            return RedirectToPage("./Index", new { merchantId = Deal.MerchantId });
         }
     }
 }

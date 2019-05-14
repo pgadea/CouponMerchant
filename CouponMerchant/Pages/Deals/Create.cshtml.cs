@@ -1,5 +1,4 @@
-﻿using System.Security.Claims;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using CouponMerchant.Data;
 using CouponMerchant.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -24,18 +23,11 @@ namespace CouponMerchant.Pages.Deals
             _db = db;
         }
 
-        public IActionResult OnGet(string userId = null)
+        public IActionResult OnGet(int merchantId)
         {
-            if (userId == null)
-            {
-                var claimsIdentity = (ClaimsIdentity)User.Identity;
-                var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
-                userId = claim.Value;
-            }
-
             Deal = new Deal
             {
-                UserId = userId
+                MerchantId = merchantId
             };
             return Page();
         }
@@ -50,7 +42,7 @@ namespace CouponMerchant.Pages.Deals
             _db.Deal.Add(Deal);
             await _db.SaveChangesAsync();
             StatusMessage = "Deal has been added successfully.";
-            return RedirectToPage("Index", new { userId = Deal.UserId });
+            return RedirectToPage("Index", new { merchantId = Deal.MerchantId });
         }
     }
 }

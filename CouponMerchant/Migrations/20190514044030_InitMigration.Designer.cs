@@ -4,14 +4,16 @@ using CouponMerchant.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace CouponMerchant.Data.Migrations
+namespace CouponMerchant.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190514044030_InitMigration")]
+    partial class InitMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -25,22 +27,22 @@ namespace CouponMerchant.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("DealName")
-                        .IsRequired();
-
                     b.Property<decimal>("DollarValue");
 
                     b.Property<DateTime>("EndDate");
+
+                    b.Property<int>("MerchantId");
+
+                    b.Property<string>("Name")
+                        .IsRequired();
 
                     b.Property<DateTime>("StartDate");
 
                     b.Property<string>("Url");
 
-                    b.Property<string>("UserId");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("MerchantId");
 
                     b.ToTable("Deal");
                 });
@@ -323,6 +325,8 @@ namespace CouponMerchant.Data.Migrations
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
 
+                    b.Property<bool>("IsAdmin");
+
                     b.Property<string>("Name");
 
                     b.HasDiscriminator().HasValue("ApplicationUser");
@@ -330,9 +334,10 @@ namespace CouponMerchant.Data.Migrations
 
             modelBuilder.Entity("CouponMerchant.Models.Deal", b =>
                 {
-                    b.HasOne("CouponMerchant.Models.ApplicationUser", "ApplicationUser")
+                    b.HasOne("CouponMerchant.Models.Merchant", "Merchant")
                         .WithMany()
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("MerchantId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("CouponMerchant.Models.ServiceDetails", b =>
