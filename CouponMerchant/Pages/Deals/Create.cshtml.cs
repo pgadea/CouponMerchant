@@ -1,9 +1,11 @@
-﻿using System.Threading.Tasks;
+﻿using System.Security.Claims;
+using System.Threading.Tasks;
 using CouponMerchant.Data;
 using CouponMerchant.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 
 namespace CouponMerchant.Pages.Deals
 {
@@ -23,11 +25,27 @@ namespace CouponMerchant.Pages.Deals
             _db = db;
         }
 
-        public IActionResult OnGet(int merchantId)
+        private async Task<ApplicationUser> GetUser()
         {
+            var claimsIdentity = (ClaimsIdentity)User.Identity;
+            var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
+
+            return await _db.ApplicationUser.FirstOrDefaultAsync(u => u.Id == claim.Value);
+        }
+
+        public async Task<IActionResult> OnGet()
+        {
+            var user = await GetUser();
+
+            if (user.IsAdmin)
+            {
+                StatusMessage = "Currenlty only merchant users may add deals.";
+                return RedirectToPage("Index");
+            }
+
             Deal = new Deal
             {
-                MerchantId = merchantId
+                MerchantId = user.MerchantId ?? 1 //TODO: update this to work for admin users
             };
             return Page();
         }
@@ -42,7 +60,7 @@ namespace CouponMerchant.Pages.Deals
             _db.Deal.Add(Deal);
             await _db.SaveChangesAsync();
             StatusMessage = "Deal has been added successfully.";
-            return RedirectToPage("Index", new { merchantId = Deal.MerchantId });
+            return RedirectToPage("Index");
         }
     }
 }

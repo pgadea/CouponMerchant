@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using CouponMerchant.Data;
@@ -9,6 +11,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace CouponMerchant.Areas.Identity.Pages.Account
@@ -42,6 +46,8 @@ namespace CouponMerchant.Areas.Identity.Pages.Account
         [BindProperty]
         public InputModel Input { get; set; }
 
+        public List<SelectListItem> Merchants { get; set; }
+
         public string ReturnUrl { get; set; }
 
         public class InputModel
@@ -68,12 +74,16 @@ namespace CouponMerchant.Areas.Identity.Pages.Account
             [Required]
             public string PhoneNumber { get; set; }
 
+            public int? MerchantId { get; set; }
+
             [Display(Name = "Is Admin")]
             public bool IsAdmin { get; set; }
         }
 
-        public void OnGet(string returnUrl = null)
+        public async Task OnGet(string returnUrl = null)
         {
+            Merchants = await _db.Merchant.Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToListAsync();
+            Merchants.Add(new SelectListItem { Value = "0", Text = "Non Merchant", Selected = true });
             ReturnUrl = returnUrl;
         }
 
@@ -88,6 +98,7 @@ namespace CouponMerchant.Areas.Identity.Pages.Account
                     Email = Input.Email,
                     Name = Input.Name,
                     PhoneNumber = Input.PhoneNumber,
+                    MerchantId = Input.IsAdmin ? null : Input.MerchantId,
                     IsAdmin = Input.IsAdmin
                 };
 

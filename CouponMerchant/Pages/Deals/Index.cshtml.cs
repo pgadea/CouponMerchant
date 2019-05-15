@@ -29,23 +29,17 @@ namespace CouponMerchant.Pages.Deals
             _db = db;
         }
 
-        //public async Task<IActionResult> OnGet(string merchantId = null)
-        //{
-        //    if (merchantId == null)
-        //    {
-        //        return Page();
-        //    }
+        private async Task<ApplicationUser> GetUser()
+        {
+            var claimsIdentity = (ClaimsIdentity)User.Identity;
+            var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
 
-        //    DealsVM = new DealsViewModel
-        //    {
-        //        Deals = await _db.Deal.Where(c => c.UserId == userId).ToListAsync(),
-        //    };
-
-        //    return Page();
-        //}
+            return await _db.ApplicationUser.FirstOrDefaultAsync(u => u.Id == claim.Value);
+        }
 
         public async Task<IActionResult> OnGet(int productPage = 1, string searchName = null, string searchCity = null, string searchState = null)
         {
+            var user = await GetUser();
             DealsVM = new DealsViewModel
             {
                 Deals = await _db.Deal.ToListAsync()
@@ -72,21 +66,21 @@ namespace CouponMerchant.Pages.Deals
             if (searchName != null)
             {
                 DealsVM.Deals = await _db.Deal
-                    .Where(x => x.Name.ToLower().Contains(searchName.ToLower())).ToListAsync();
+                    .Where(x => x.Name.ToLower().Contains(searchName.ToLower()) && user.IsAdmin || x.MerchantId == user.MerchantId).ToListAsync();
             }
             else
             {
                 if (searchCity != null)
                 {
                     DealsVM.Deals = await _db.Deal
-                    .Where(x => x.Name.ToLower().Contains(searchCity.ToLower())).ToListAsync();
+                    .Where(x => x.Name.ToLower().Contains(searchCity.ToLower()) && user.IsAdmin || x.MerchantId == user.MerchantId).ToListAsync();
                 }
                 else
                 {
                     if (searchState != null)
                     {
                         DealsVM.Deals = await _db.Deal
-                        .Where(x => x.Name.ToLower().Contains(searchState.ToLower())).ToListAsync();
+                        .Where(x => x.Name.ToLower().Contains(searchState.ToLower()) && user.IsAdmin || x.MerchantId == user.MerchantId).ToListAsync();
                     }
                 }
             }
