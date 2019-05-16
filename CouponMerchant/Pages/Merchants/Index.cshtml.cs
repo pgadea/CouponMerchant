@@ -1,16 +1,19 @@
 ﻿using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using CouponMerchant.Data;
 using CouponMerchant.Models;
 using CouponMerchant.Models.ViewModel;
 using CouponMerchant.Utility;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 
 namespace CouponMerchant.Pages.Merchants
 {
+    [Authorize]
     public class IndexModel : PageModel
     {
         private readonly ApplicationDbContext _db;
@@ -25,9 +28,10 @@ namespace CouponMerchant.Pages.Merchants
 
         public async Task<IActionResult> OnGet(int productPage = 1, string searchName = null, string searchCity = null, string searchState = null)
         {
+            var user = await GetUser();
             MerchantListVM = new MerchantsListViewModel
             {
-                Merchants = await _db.Merchant.ToListAsync()
+                Merchants = await _db.Merchant.Where(x => x.Id == user.MerchantId || user.IsAdmin).ToListAsync()
             };
 
             var param = new StringBuilder();
@@ -51,21 +55,21 @@ namespace CouponMerchant.Pages.Merchants
             if (searchName != null)
             {
                 MerchantListVM.Merchants = await _db.Merchant
-                    .Where(x => x.Name.ToLower().Contains(searchName.ToLower())).ToListAsync();
+                    .Where(x => x.Name.ToLower().Contains(searchName.ToLower()) && (user.IsAdmin || x.Id == user.MerchantId)).ToListAsync();
             }
             else
             {
                 if (searchCity != null)
                 {
                     MerchantListVM.Merchants = await _db.Merchant
-                    .Where(x => x.Name.ToLower().Contains(searchCity.ToLower())).ToListAsync();
+                    .Where(x => x.City.ToLower().Contains(searchCity.ToLower()) && (user.IsAdmin || x.Id == user.MerchantId)).ToListAsync();
                 }
                 else
                 {
                     if (searchState != null)
                     {
                         MerchantListVM.Merchants = await _db.Merchant
-                        .Where(x => x.Name.ToLower().Contains(searchState.ToLower())).ToListAsync();
+                        .Where(x => x.State.ToLower().Contains(searchState.ToLower()) && (user.IsAdmin || x.Id == user.MerchantId)).ToListAsync();
                     }
                 }
             }
@@ -85,6 +89,14 @@ namespace CouponMerchant.Pages.Merchants
                 .Take(SD.PaginationUsersPageSize).ToList();
 
             return Page();
+        }
+
+        private async Task<ApplicationUser> GetUser()
+        {
+            var claimsIdentity = (ClaimsIdentity)User.Identity;
+            var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
+
+            return await _db.ApplicationUser.FirstOrDefaultAsync(u => u.Id == claim.Value);
         }
     }
 }

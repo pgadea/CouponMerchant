@@ -43,9 +43,17 @@ namespace CouponMerchant.Pages.Deals
                 return RedirectToPage("Index");
             }
 
+            var merchantId = user.MerchantId;
+
+            if (merchantId == null)
+            {
+                StatusMessage = "Creating a new deal requires a Merchant ID";
+                return RedirectToPage("Index");
+            }
+
             Deal = new Deal
             {
-                MerchantId = user.MerchantId ?? 1 //TODO: update this to work for admin users
+                MerchantId = (int)merchantId //TODO: update this to work for admin users
             };
             return Page();
         }

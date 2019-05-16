@@ -1,11 +1,13 @@
 ﻿using System.Threading.Tasks;
 using CouponMerchant.Data;
 using CouponMerchant.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace CouponMerchant.Pages.Merchants
 {
+    [Authorize]
     public class CreateModel : PageModel
     {
         private readonly ApplicationDbContext _db;

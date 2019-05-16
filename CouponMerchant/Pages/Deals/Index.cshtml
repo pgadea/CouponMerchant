@@ -29,10 +29,10 @@
                             @Html.Editor("searchName", new { htmlAttributes = new { @class = "form-control", placeholder = "Name..." } })
                         </div>
                         <div class="col-4">
-                            @Html.Editor("searchCity", new { htmlAttributes = new { @class = "form-control", placeholder = "Start Date..." } })
+                            @Html.Editor("searchStartDate", new { htmlAttributes = new { @class = "form-control", placeholder = "Start Date..." } })
                         </div>
                         <div class="col-4">
-                            @Html.Editor("searchState", new { htmlAttributes = new { @class = "form-control", placeholder = "End Date..." } })
+                            @Html.Editor("searchEndDate", new { htmlAttributes = new { @class = "form-control", placeholder = "End Date..." } })
                         </div>
                     </div>
                 </div>
@@ -74,8 +74,8 @@
                             @Html.DisplayFor(m => item.EndDate)
                         </td>
                         <td>
-                            <a asp-page="../Merchants/Index" asp-route-merchantId="@item.MerchantId" style="text-decoration:none;">
-                                <i class="fas fa-file-invoice-dollar"></i> &nbsp; View Deals
+                            <a asp-page="../Deals/Index" style="text-decoration:none;">
+                                 &nbsp; Deal Image placeholder...
                             </a>
                         </td>
                         <td>

@@ -76,7 +76,7 @@ namespace CouponMerchant.Areas.Identity.Pages.Account
 
             public int? MerchantId { get; set; }
 
-            [Display(Name = "Is Admin")]
+            [Display(Name = "Admin")]
             public bool IsAdmin { get; set; }
         }
 

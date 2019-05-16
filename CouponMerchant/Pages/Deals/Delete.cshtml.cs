@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Security.Claims;
+using System.Threading.Tasks;
 using CouponMerchant.Data;
 using CouponMerchant.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -26,8 +27,17 @@ namespace CouponMerchant.Pages.Deals
 
         public async Task<IActionResult> OnGetAsync(int id)
         {
+            var user = await GetUser();
             Deal = await _db.Deal
                 .Include(c => c.Merchant).FirstOrDefaultAsync(m => m.Id == id);
+
+            if (!user.IsAdmin)
+            {
+                if (user.MerchantId != Deal.MerchantId)
+                {
+                    StatusMessage = "Only Admin users or deal owning merchants may delete a deal.";
+                }
+            }
 
             if (Deal == null)
             {
@@ -47,7 +57,15 @@ namespace CouponMerchant.Pages.Deals
             _db.Deal.Remove(Deal);
             await _db.SaveChangesAsync();
             StatusMessage = "Deal deleted successfully.";
-            return RedirectToPage("./Index", new { merchantId });
+            return RedirectToPage("./Index");
+        }
+
+        private async Task<ApplicationUser> GetUser()
+        {
+            var claimsIdentity = (ClaimsIdentity)User.Identity;
+            var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
+
+            return await _db.ApplicationUser.FirstOrDefaultAsync(u => u.Id == claim.Value);
         }
     }
 }

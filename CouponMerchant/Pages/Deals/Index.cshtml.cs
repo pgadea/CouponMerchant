@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
@@ -37,12 +38,12 @@ namespace CouponMerchant.Pages.Deals
             return await _db.ApplicationUser.FirstOrDefaultAsync(u => u.Id == claim.Value);
         }
 
-        public async Task<IActionResult> OnGet(int productPage = 1, string searchName = null, string searchCity = null, string searchState = null)
+        public async Task<IActionResult> OnGet(int productPage = 1, string searchName = null, string searchStartDate = null, string searchEndDate = null)
         {
             var user = await GetUser();
             DealsVM = new DealsViewModel
             {
-                Deals = await _db.Deal.ToListAsync()
+                Deals = await _db.Deal.Where(x => x.MerchantId == user.MerchantId || user.IsAdmin).ToListAsync()
             };
 
             var param = new StringBuilder();
@@ -53,34 +54,36 @@ namespace CouponMerchant.Pages.Deals
                 param.Append(searchName);
             }
             param.Append("&searchCity=");
-            if (searchCity != null)
+            if (searchStartDate != null)
             {
-                param.Append(searchCity);
+                param.Append(searchStartDate);
             }
             param.Append("&searchState=");
-            if (searchState != null)
+            if (searchEndDate != null)
             {
-                param.Append(searchState);
+                param.Append(searchEndDate);
             }
 
             if (searchName != null)
             {
                 DealsVM.Deals = await _db.Deal
-                    .Where(x => x.Name.ToLower().Contains(searchName.ToLower()) && user.IsAdmin || x.MerchantId == user.MerchantId).ToListAsync();
+                    .Where(x => x.Name.ToLower().Contains(searchName.ToLower()) && (user.IsAdmin || x.MerchantId == user.MerchantId)).ToListAsync();
             }
             else
             {
-                if (searchCity != null)
+                if (searchStartDate != null)
                 {
+                    var startDate = DateTime.TryParse(searchStartDate, out var result) ? result : default;
                     DealsVM.Deals = await _db.Deal
-                    .Where(x => x.Name.ToLower().Contains(searchCity.ToLower()) && user.IsAdmin || x.MerchantId == user.MerchantId).ToListAsync();
+                    .Where(x => x.StartDate == startDate && (user.IsAdmin || x.MerchantId == user.MerchantId)).ToListAsync();
                 }
                 else
                 {
-                    if (searchState != null)
+                    if (searchEndDate != null)
                     {
+                        var endDate = DateTime.TryParse(searchEndDate, out var result) ? result : default;
                         DealsVM.Deals = await _db.Deal
-                        .Where(x => x.Name.ToLower().Contains(searchState.ToLower()) && user.IsAdmin || x.MerchantId == user.MerchantId).ToListAsync();
+                        .Where(x => x.EndDate == endDate && (user.IsAdmin || x.MerchantId == user.MerchantId)).ToListAsync();
                     }
                 }
             }

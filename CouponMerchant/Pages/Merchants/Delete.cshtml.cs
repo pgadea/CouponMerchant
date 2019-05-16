@@ -1,12 +1,14 @@
 ﻿using System.Threading.Tasks;
 using CouponMerchant.Data;
 using CouponMerchant.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 
 namespace CouponMerchant.Pages.Merchants
 {
+    [Authorize]
     public class DeleteModel : PageModel
     {
         private readonly ApplicationDbContext _db;
